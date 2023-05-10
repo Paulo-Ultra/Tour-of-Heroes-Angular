@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HEROES } from './mock-heroes';
 import { Hero } from './hero.model';
+import { Observable, of } from 'rxjs';
 
 //Quando inicia a aplicação o service vai ser criado no momento inicial da aplicação
 @Injectable({
@@ -8,7 +9,9 @@ import { Hero } from './hero.model';
 })
 export class HeroService {
 
-  getHeroes(): Hero[] {
-    return HEROES;
+  getHeroes(): Observable<Hero[]> {
+    //A lista por conta do of da biblioteca rxjs se torna um observable
+    const heroes = of(HEROES);
+    return heroes;
   }
 }

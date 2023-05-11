@@ -1,7 +1,8 @@
+import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
 import { HEROES } from './mock-heroes';
 import { Hero } from './hero.model';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 //Quando inicia a aplicação o service vai ser criado no momento inicial da aplicação
 @Injectable({
@@ -9,11 +10,13 @@ import { Observable, of, throwError } from 'rxjs';
 })
 export class HeroService {
 
+  constructor(private messageService: MessageService) {}
+
   getHeroes(): Observable<Hero[]> {
     //A lista por conta do of da biblioteca rxjs se torna um observable
     const heroes = of(HEROES);
+    this.messageService.addMessage('HeroService: fetched heroes');
 
-    //return throwError(new Error('Erro ao buscar heróis'));
     return heroes;
   }
 }

@@ -19,4 +19,11 @@ export class HeroService {
 
     return heroes;
   }
+
+  getHero(id: number): Observable<Hero> {
+    //A exclamação é para dizer que o find vai retornar um valor
+    const hero = HEROES.find(hero => hero.id === id)!;
+    this.messageService.addMessage(`HeroService: fetched hero id=${id}`);
+    return of(hero);
+  }
 }

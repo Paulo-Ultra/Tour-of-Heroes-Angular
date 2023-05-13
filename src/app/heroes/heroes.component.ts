@@ -1,7 +1,6 @@
 import { HeroService } from './../hero.service';
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero.model';
-import { MessageService } from '../message.service';
 //import { Observable } from 'rxjs';
 
 @Component({
@@ -13,10 +12,9 @@ export class HeroesComponent implements OnInit{
 
   heroes: Hero[] = [];
   //Interrogação indica que a variável pode ser undefined
-  selectedHero?: Hero;
+  //selectedHero?: Hero;
 
-  constructor(private heroService: HeroService,
-    private messageService: MessageService) {}
+  constructor(private heroService: HeroService) {}
 
    ngOnInit(): void {
     this.getHeroes();
@@ -27,10 +25,6 @@ export class HeroesComponent implements OnInit{
       (heroes) => (this.heroes = heroes));
    }
 
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.addMessage(`HeroesComponent: Selected hero id=${hero.id}`);
-  }
 
   /*getHeroes(): void {
     //Para o Observable executar é necessário o subcribe()

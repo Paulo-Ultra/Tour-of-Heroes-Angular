@@ -10,6 +10,7 @@ import { Hero } from '../hero.model';
 })
 export class HeroesComponent implements OnInit{
 
+  displayedColumns: string[] = ['id', 'name'];
   heroes: Hero[] = [];
   //Interrogação indica que a variável pode ser undefined
   //selectedHero?: Hero;

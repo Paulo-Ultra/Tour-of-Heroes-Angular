@@ -1,7 +1,7 @@
 import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
 import { HEROES } from './mock-heroes';
-import { Hero } from './hero.model';
+import { Hero } from '../models/hero.model';
 import { Observable, of } from 'rxjs';
 
 //Quando inicia a aplicação o service vai ser criado no momento inicial da aplicação

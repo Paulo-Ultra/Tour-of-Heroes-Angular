@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,12 +18,11 @@ const MODULES = [
     MatListModule,
     MatInputModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
 ]
 
 @NgModule({
   imports: [
-    CommonModule,
     MODULES
   ],
   exports: [MODULES]

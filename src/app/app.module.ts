@@ -18,10 +18,6 @@ import { HeroesModule } from './heroes/heroes.module';
     FormsModule,
     BrowserAnimationsModule, // <-- import the FormsModule antes de usar binding do [(ngModel)] no html
 
-    //feature
-    DashboardModule,
-    HeroesModule,
-
     //app
     AppRoutingModule,
     CoreModule // <-- import the CoreModule after BrowserModule

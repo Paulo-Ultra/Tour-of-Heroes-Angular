@@ -1,3 +1,4 @@
+import { LoadingService } from './loading.service';
 import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
 import { Hero } from '../models/hero.model';
@@ -21,13 +22,21 @@ export class HeroService {
 
   constructor(
     private messageService: MessageService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private loadingService: LoadingService
     ) {}
 
   getHeroes(): Observable<Hero[]> {
-    return this.httpClient.get<Hero[]>(this.heroesUrl).pipe(
-      tap((heroes)=> this.log(`fetched ${heroes.length} heroes`))
-    );
+    return this.httpClient
+    .get<Hero[]>(this.heroesUrl)
+    .pipe(tap((heroes)=> this.log(`fetched ${heroes.length} hero(es)`)));
+
+    /*//Sem usar o interceptor
+    this.loadingService.show();
+    return this.httpClient
+    .get<Hero[]>(this.heroesUrl).pipe(
+      tap((heroes)=> this.log(`fetched ${heroes.length} hero(es)`)),
+      finalize(() => this.loadingService.hide())); */
 
       //Como estava usando o mock
     //A lista por conta do of da biblioteca rxjs se torna um observable
@@ -39,9 +48,9 @@ export class HeroService {
 
   getHero(id: number): Observable<Hero> {
 
-    return this.httpClient.get<Hero>(`${this.heroesUrl}/${id}`).pipe(
-      tap((heroes)=> this.log(`fetched hero id=${id} and name=${heroes.name}`))
-    );
+    return this.httpClient
+    .get<Hero>(`${this.heroesUrl}/${id}`)
+    .pipe(tap((heroes)=> this.log(`fetched hero id=${id} and name=${heroes.name}`)));
 
           //Como estava usando o mock
     //A exclamação é para dizer que o find vai retornar um valor

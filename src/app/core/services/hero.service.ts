@@ -26,7 +26,7 @@ export class HeroService {
     private loadingService: LoadingService
     ) {}
 
-  getHeroes(): Observable<Hero[]> {
+  getAll(): Observable<Hero[]> {
     return this.httpClient
     .get<Hero[]>(this.heroesUrl)
     .pipe(tap((heroes)=> this.log(`fetched ${heroes.length} hero(es)`)));
@@ -46,11 +46,11 @@ export class HeroService {
   //  return heroes;
   }
 
-  getHero(id: number): Observable<Hero> {
+  getOne(id: number): Observable<Hero> {
 
     return this.httpClient
     .get<Hero>(`${this.heroesUrl}/${id}`)
-    .pipe(tap((heroes)=> this.log(`fetched hero id=${id} and name=${heroes.name}`)));
+    .pipe(tap((hero)=> this.log(`fetched ${this.descAttributes(hero)}`)));
 
           //Como estava usando o mock
     //A exclamação é para dizer que o find vai retornar um valor
@@ -59,7 +59,24 @@ export class HeroService {
     //return of(hero);
   }
 
+  create(hero: Hero): Observable<Hero> {
+    return this.httpClient.post<Hero>(this.heroesUrl, hero)
+    .pipe(tap((hero) => this.log(`Created ${this.descAttributes(hero)}`))
+    );
+  }
+
+  update(hero: Hero): Observable<Hero> {
+    return this.httpClient.put<Hero>(`${this.heroesUrl}/${hero.id}`, hero)
+    .pipe(tap((hero) => this.log(`Updated ${this.descAttributes(hero)}`))
+    );
+  }
+
+  private descAttributes(hero: Hero): string {
+    return `Hero ID=${hero.id} and Name=${hero.name}`;
+  }
+
   private log(message: string): void {
     this.messageService.addMessage(`HeroService: ${message}`)
   }
+
 }

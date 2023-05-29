@@ -1,6 +1,9 @@
 import { HeroService } from '../../../core/services/hero.service';
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../../core/models/hero.model';
+import { DialogData } from 'src/app/core/models/dialog-data.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/core/components/confirmation-dialog/confirmation-dialog.component';
 //import { Observable } from 'rxjs';
 
 @Component({
@@ -10,12 +13,14 @@ import { Hero } from '../../../core/models/hero.model';
 })
 export class HeroesComponent implements OnInit{
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   heroes: Hero[] = [];
   //Interrogação indica que a variável pode ser undefined
   //selectedHero?: Hero;
 
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService,
+    private dialog: MatDialog) {}
 
    ngOnInit(): void {
     this.getHeroes();
@@ -26,6 +31,32 @@ export class HeroesComponent implements OnInit{
       (heroes) => (this.heroes = heroes));
    }
 
+   delete(hero: Hero) : void {
+    const dialogData: DialogData = {
+      cancelText: 'Cancel',
+      confirmText: 'Delete',
+      content: `Delete '${hero.name}'?`,
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: dialogData,
+        width: '300px'
+      })
+
+      dialogRef.afterClosed().subscribe((result => {
+        if(result) {
+          this.heroService.delete(hero).subscribe(() => {
+            this.getHeroes();
+          });
+        }
+      }));
+    //forma tradicional de deletar
+
+    /*//Uma forma de criar o método delete
+    this.heroService.delete(hero).subscribe(() => {
+      this.heroes = this.heroes.filter(h => h !== hero);
+    });*/
+   }
 
   /*getHeroes(): void {
     //Para o Observable executar é necessário o subcribe()

@@ -49,7 +49,7 @@ export class HeroService {
   getOne(id: number): Observable<Hero> {
 
     return this.httpClient
-    .get<Hero>(`${this.heroesUrl}/${id}`)
+    .get<Hero>(this.getUrl(id))
     .pipe(tap((hero)=> this.log(`fetched ${this.descAttributes(hero)}`)));
 
           //Como estava usando o mock
@@ -66,9 +66,16 @@ export class HeroService {
   }
 
   update(hero: Hero): Observable<Hero> {
-    return this.httpClient.put<Hero>(`${this.heroesUrl}/${hero.id}`, hero)
+    return this.httpClient.put<Hero>(this.getUrl(hero.id), hero)
     .pipe(tap((hero) => this.log(`Updated ${this.descAttributes(hero)}`))
     );
+  }
+
+  //O Observable fica como any pq no retorno n~]ao virá nada
+  delete(hero: Hero): Observable<any> {
+    return this.httpClient
+    .delete<any>(this.getUrl(hero.id))
+    .pipe(tap(() => this.log(`Deleted ${this.descAttributes(hero)}`)));
   }
 
   private descAttributes(hero: Hero): string {
@@ -79,4 +86,7 @@ export class HeroService {
     this.messageService.addMessage(`HeroService: ${message}`)
   }
 
+  private getUrl(id: number): string {
+    return `${this.heroesUrl}/${id}`;
+  }
 }

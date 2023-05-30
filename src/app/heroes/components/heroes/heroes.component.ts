@@ -58,6 +58,10 @@ export class HeroesComponent implements OnInit{
     });*/
    }
 
+   onSelected(hero: Hero): void {
+    this.delete(hero);
+   }
+
   /*getHeroes(): void {
     //Para o Observable executar é necessário o subcribe()
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);

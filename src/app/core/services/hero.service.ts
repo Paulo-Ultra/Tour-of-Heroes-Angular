@@ -2,7 +2,7 @@ import { LoadingService } from './loading.service';
 import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
 import { Hero } from '../models/hero.model';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -76,6 +76,21 @@ export class HeroService {
     return this.httpClient
     .delete<any>(this.getUrl(hero.id))
     .pipe(tap(() => this.log(`Deleted ${this.descAttributes(hero)}`)));
+  }
+
+  search(term: string): Observable<Hero[]> {
+    if(!term.trim()){
+      return of([]);
+    }
+
+    return this.httpClient
+    .get<Hero[]> (`${this.heroesUrl}/?name=${term}`)
+    .pipe(
+      tap((heroes) => heroes.length
+      ? this.log(`Found ${heroes.length} hero(es) matching "${term}"`)
+      : this.log(`No hero(es) matching "${term}"`)
+      )
+    );
   }
 
   private descAttributes(hero: Hero): string {

@@ -11,6 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const MODULES = [
   MatButtonModule,
@@ -25,6 +26,7 @@ const MODULES = [
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatAutocompleteModule,
 ]
 
 @NgModule({
